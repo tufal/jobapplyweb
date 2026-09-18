@@ -1,0 +1,653 @@
+/* ============================================================
+   GLOBAL RESET
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f8fafc;
+}
+
+.light-mode {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0.72) 0%,
+    rgba(15, 23, 42, 0.45) 45%,
+    rgba(15, 23, 42, 0.1) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  width: 55%;
+  z-index: 2;
+}
+
+.hero-title {
+  animation: fadeText 0.6s ease-in-out;
+}
+
+@keyframes fadeText {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   SEARCH BOX
+   ============================================================ */
+.search-box {
+  width: 100%;
+  max-width: 850px;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+}
+
+.search-box input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* ============================================================
+   DEVELOPER ROLES / COMPONENTS SECTION
+   ============================================================ */
+.components-section {
+  background: #f8fafc;
+}
+
+.component-container {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  min-height: 120px;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 16px;
+  color: #0f172a;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease, background 0.25s ease;
+}
+
+.component-container:hover {
+  transform: translateY(-7px);
+  background: linear-gradient(135deg, #ffffff, #eff6ff);
+  border-color: #2563eb;
+  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.15);
+}
+
+.emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  margin: 0;
+  transition: transform 0.25s ease;
+}
+
+.component-container:hover .emoji {
+  transform: scale(1.15);
+}
+
+.component-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ============================================================
+   LOGIN PAGE
+   ============================================================ */
+.login-page {
+  min-height: 100vh;
+  height: 100vh;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  overflow: hidden;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  border: none;
+  overflow: hidden;
+}
+
+/* --- Header --- */
+.login-header {
+  text-align: center;
+  padding: 24px 24px 0;
+}
+
+.login-logo {
+  margin-bottom: 14px;
+  display: inline-block;
+}
+
+.login-logo span {
+  font-size: 26px;
+  font-weight: 800;
+  color: #2563eb;
+  letter-spacing: 1.5px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.login-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+
+.login-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+/* --- Body --- */
+.login-body {
+  padding: 0 24px 24px;
+}
+
+/* --- Alerts --- */
+.login-alert {
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.login-alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.login-alert-success {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.login-alert-icon {
+  font-size: 13px;
+}
+
+/* --- Fields --- */
+.login-field {
+  margin-bottom: 8px;
+}
+
+.login-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.login-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.login-label-inline {
+  margin: 0;
+}
+
+.login-forgot-link {
+  font-size: 12px;
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Input --- */
+.login-input {
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+  outline: none;
+  transition: all 0.2s ease;
+  color: #0f172a;
+}
+
+.login-input:focus,
+.login-input-focused {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: #ffffff;
+}
+
+.login-input::placeholder {
+  color: #94a3b8;
+}
+
+.login-input-password {
+  padding-right: 58px;
+}
+
+/* --- Password Wrapper --- */
+.login-password-wrapper {
+  position: relative;
+}
+
+.login-toggle-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: color 0.2s ease;
+}
+
+.login-toggle-btn:hover {
+  color: #2563eb;
+}
+
+/* --- Remember Me --- */
+.login-remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  margin-top: 12px;
+}
+
+.login-checkbox {
+  width: 15px;
+  height: 15px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  margin: 0;
+}
+
+.login-checkbox-label {
+  font-size: 12.5px;
+  color: #475569;
+  cursor: pointer;
+  margin: 0;
+  user-select: none;
+}
+
+/* --- Submit Button --- */
+.login-submit-btn {
+  width: 100%;
+  padding: 11px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.login-submit-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.login-submit-btn-loading,
+.login-submit-btn:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+/* --- Footer --- */
+.login-footer {
+  text-align: center;
+  font-size: 13px;
+  color: #64748b;
+  margin: 16px 0 0;
+}
+
+.login-footer-link {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-footer-link:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 992px) {
+  .hero-section {
+    height: 500px;
+  }
+
+  .hero-image {
+    object-position: center;
+  }
+
+  .hero-content {
+    left: 5%;
+    width: 90%;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    height: 650px;
+  }
+
+  .hero-image {
+    object-position: center;
+  }
+
+  .hero-content {
+    top: 40px;
+    left: 5%;
+    transform: none;
+    width: 90%;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .search-box {
+    padding: 10px !important;
+  }
+
+  .component-container {
+    border-radius: 12px;
+  }
+
+  .emoji {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    max-width: 100%;
+  }
+
+  .login-header {
+    padding: 20px 20px 0;
+  }
+
+  .login-body {
+    padding: 0 20px 20px;
+  }
+
+  .login-logo span {
+    font-size: 24px;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+}
+/* ============================================================
+   REGISTER PAGE
+   ============================================================ */
+
+.register-page {
+  min-height: 100vh;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.register-header {
+  text-align: center;
+  padding: 28px 24px 10px;
+}
+
+.register-logo {
+  margin-bottom: 14px;
+}
+
+.register-logo span {
+  font-size: 25px;
+  font-weight: 800;
+  color: #2563eb;
+  letter-spacing: 1.5px;
+}
+
+.register-title {
+  margin: 0 0 5px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.register-subtitle {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.register-body {
+  padding: 10px 24px 26px;
+}
+
+.register-field {
+  margin-bottom: 15px;
+}
+
+.register-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.register-input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.register-input::placeholder {
+  color: #94a3b8;
+}
+
+.register-input:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.register-submit-btn {
+  width: 100%;
+  padding: 11px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.register-submit-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.register-submit-btn:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.register-alert {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  font-size: 12.5px;
+}
+
+.register-alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.register-alert-success {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.register-alert-icon {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.register-footer {
+  margin: 18px 0 0;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.register-footer-link {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-footer-link:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   REGISTER RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .register-page {
+    padding: 15px;
+  }
+
+  .register-card {
+    max-width: 100%;
+  }
+
+  .register-header {
+    padding: 23px 20px 8px;
+  }
+
+  .register-body {
+    padding: 8px 20px 22px;
+  }
+
+  .register-title {
+    font-size: 20px;
+  }
+
+  .register-logo span {
+    font-size: 23px;
+  }
+}
