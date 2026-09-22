@@ -140,36 +140,53 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            {/* Profile only when logged in */}
+            
             {isauth && (
-              <li className="nav-item fs-5">
-                <NavLink
-                  to="/profile"
-                  className={({ isActive }) =>
-                    `nav-link px-3 ${
-                      isActive ? "text-primary fw-semibold" : ""
-                    }`
-                  }
-                >
-                  Profile
-                </NavLink>
-              </li>
+              <>
+                <li className="nav-item fs-5">
+                  <NavLink
+                    to="/profile"
+                    className={({ isActive }) =>
+                      `nav-link px-3 ${
+                        isActive ? "text-primary fw-semibold" : ""
+                      }`
+                    }
+                  >
+                    Profile
+                  </NavLink>
+                </li>
+                <li className="nav-item fs-5">
+                  <NavLink
+  to="/complete-profile"
+  className={({ isActive }) =>
+    `nav-link px-3 ${
+      isActive ? "text-primary fw-semibold" : ""
+    }`
+  }
+>
+  CompleteProfile
+</NavLink>
+                </li>
+              </>
             )}
           </ul>
 
           {/* Authentication Buttons */}
-          <p className="mb-0 me-3 text-secondary fw-medium text-nowrap">
-            Welcome, <span className="text-primary">{uname.trim()}</span>
-          </p>
+          
           <div className="d-flex gap-2">
             {isauth ? (
-              <button
+              <>
+                <p className="mb-0 me-3 text-secondary fw-medium text-nowrap">
+                  Welcome, <span className="text-primary">{uname.trim()}</span>
+                </p>
+                <button
                 type="button"
                 onClick={handleLogout}
                 className="btn btn-danger px-4"
-              >
-                Logout
-              </button>
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               <>
                 <Link

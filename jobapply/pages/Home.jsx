@@ -37,12 +37,16 @@ const Home = () => {
   const [showAll, setShowAll] = useState(false);
 
   const [jobs, setJobs] = useState([]);
-
   const [jobsdetails, setJobsDetails] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const visibleComponents = showAll
     ? components
     : components.slice(0, 8);
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -52,39 +56,57 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+
+  const fetchJobs = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await axios.get(
+        "http://localhost:5000/api/jobs"
+      );
+
+      // console.log("JOBS RESPONSE:", response.data);
+
+      const jobsData = Array.isArray(response.data?.jobs)
+        ? response.data.jobs
+        : [];
+
+      setJobs(jobsData);
+
+    } catch (err) {
+      console.error(
+        "Jobs API Error:",
+        err.response?.data || err.message
+      );
+
+      setJobs([]);
+
+      setError(
+        err.response?.data?.message ||
+          "Jobs fetch nahi ho payi."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+ 
+
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/jobs"
-        );
-
-        
-
-        const jobsData = Array.isArray(response.data)
-          ? response.data
-          : [];
-
-        setJobs(jobsData);
-      } catch (err) {
-        console.error(
-          "Jobs API Error:",
-          err.response?.data || err.message
-        );
-      }
-    };
-
     fetchJobs();
   }, []);
 
+  
+
   const handleApply = () => {
-    if (!jobsdetails?.apply_link) {
+    if (!jobsdetails?.link) {
       alert("Apply link available nahi hai.");
       return;
     }
 
     window.open(
-      jobsdetails.apply_link,
+      jobsdetails.link,
       "_blank",
       "noopener,noreferrer"
     );
@@ -92,7 +114,10 @@ const Home = () => {
 
   return (
     <>
+      
+
       <section className="hero-section position-relative">
+
         <img
           src={meri}
           alt="Job Search"
@@ -119,32 +144,43 @@ const Home = () => {
             successful career with JobApply.
           </p>
 
-          
+          {/* =========================
+              SEARCH UI ONLY
+          ========================= */}
 
           <div className="search-box bg-white rounded-3 shadow p-2">
 
             <div className="row g-2">
 
               <div className="col-lg-5">
+
                 <input
                   type="text"
                   className="form-control form-control-lg border-0"
                   placeholder="Job title, skills or keywords"
                 />
+
               </div>
 
               <div className="col-lg-4">
+
                 <input
                   type="text"
                   className="form-control form-control-lg border-0"
                   placeholder="Location"
                 />
+
               </div>
 
               <div className="col-lg-3">
-                <button className="btn btn-primary btn-lg w-100">
+
+                <button
+                  className="btn btn-primary btn-lg w-100"
+                  type="button"
+                >
                   Search Jobs
                 </button>
+
               </div>
 
             </div>
@@ -158,7 +194,9 @@ const Home = () => {
         </div>
       </section>
 
-      
+      {/* =========================
+          DEVELOPER ROLES
+      ========================= */}
 
       <section className="components-section py-5">
 
@@ -217,10 +255,11 @@ const Home = () => {
           </div>
 
         </div>
-
       </section>
 
-      {/* ================= JOBS ================= */}
+      {/* =========================
+          JOBS SECTION
+      ========================= */}
 
       <section className="jobs-section">
 
@@ -238,72 +277,122 @@ const Home = () => {
 
           </div>
 
-          {/* JOB LIST */}
+          {/* ERROR */}
 
-          <div className="jobs-list">
+          {error && (
+            <div className="alert alert-danger text-center">
+              {error}
+            </div>
+          )}
 
-            {jobs.map((job) => (
+          {/* LOADING */}
+
+          {loading && (
+            <div className="text-center py-5">
 
               <div
-                key={job.id}
-                className="job-card"
-              >
+                className="spinner-border text-primary"
+                role="status"
+              ></div>
 
-                <div className="job-card-body">
+              <p className="mt-3 text-secondary">
+                Jobs loading...
+              </p>
 
-                  <div className="job-card-header">
+            </div>
+          )}
 
-                    <div>
+          {/* NO JOBS */}
 
-                      <h4 className="job-company">
-                        {job.company || "Company not available"}
-                      </h4>
+          {!loading && !error && jobs.length === 0 && (
+            <div className="text-center py-5">
 
-                      <span className="job-type">
-                        {job.job_title || "Job Title"}
+              <h5>
+                No jobs found
+              </h5>
+
+              <p className="text-secondary">
+                No jobs available right now.
+              </p>
+
+            </div>
+          )}
+
+          
+
+          {!loading && jobs.length > 0 && (
+
+            <div className="jobs-list">
+
+              {jobs.map((job, index) => (
+
+                <div
+                  key={job.id || index}
+                  className="job-card"
+                >
+
+                  <div className="job-card-body">
+
+                    <div className="job-card-header">
+
+                      <div>
+
+                        <h4 className="job-company">
+                          {job.company ||
+                            "Company not available"}
+                        </h4>
+
+                        <span className="job-type">
+                          {job.title ||
+                            "Job Title"}
+                        </span>
+
+                      </div>
+
+                      <span className="job-badge">
+                        Hiring
                       </span>
 
                     </div>
 
-                    <span className="job-badge">
-                      Hiring
-                    </span>
+                    <p className="job-description">
+                      {job.snippet ||
+                        "No description available."}
+                    </p>
 
-                  </div>
+                    <div className="job-card-footer">
 
-                  <p className="job-description">
-                    {job.job_description ||
-                      "No description available."}
-                  </p>
+                      <div className="job-location">
+                        📍{" "}
+                        {job.location ||
+                          "Location not available"}
+                      </div>
 
-                  <div className="job-card-footer">
+                      <button
+                        className="view-job-btn"
+                        onClick={() =>
+                          setJobsDetails(job)
+                        }
+                      >
+                        View More →
+                      </button>
 
-                    <div className="job-location">
-                      📍 {job.location || "Location not available"}
                     </div>
-
-                    <button
-                      className="view-job-btn"
-                      onClick={() =>
-                        setJobsDetails(job)
-                      }
-                    >
-                      View More →
-                    </button>
 
                   </div>
 
                 </div>
 
-              </div>
+              ))}
 
-            ))}
+            </div>
 
-          </div>
+          )}
 
         </div>
-
       </section>
+
+      
 
       {jobsdetails && (
 
@@ -314,15 +403,19 @@ const Home = () => {
 
           <div
             className="job-modal"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) =>
+              e.stopPropagation()
+            }
           >
+
+            
 
             <div className="job-details-header">
 
               <div>
 
                 <h3>
-                  {jobsdetails.job_title ||
+                  {jobsdetails.title ||
                     "Job Details"}
                 </h3>
 
@@ -345,6 +438,8 @@ const Home = () => {
 
             </div>
 
+            
+
             <div className="details-description">
 
               <h5>
@@ -352,37 +447,13 @@ const Home = () => {
               </h5>
 
               <p>
-                {jobsdetails.job_description ||
+                {jobsdetails.snippet ||
                   "Not specified"}
               </p>
 
             </div>
 
-            <div className="details-description">
-
-              <h5>
-                About Company
-              </h5>
-
-              <p>
-                {jobsdetails.about_company ||
-                  "Not specified"}
-              </p>
-
-            </div>
-
-            <div className="details-description">
-
-              <h5>
-                Role & Responsibilities
-              </h5>
-
-              <p>
-                {jobsdetails.role_and_responsibility ||
-                  "Not specified"}
-              </p>
-
-            </div>
+           
 
             <div className="job-info-grid">
 
@@ -406,7 +477,7 @@ const Home = () => {
                 </small>
 
                 <strong>
-                  {jobsdetails.job_type ||
+                  {jobsdetails.type ||
                     "Not available"}
                 </strong>
 
@@ -415,26 +486,13 @@ const Home = () => {
               <div className="job-info">
 
                 <small>
-                  🎯 Experience
+                  📅 Updated
                 </small>
 
                 <strong>
-                  {jobsdetails.experience ||
-                    "Not specified"}
-                </strong>
-
-              </div>
-
-              <div className="job-info">
-
-                <small>
-                  📅 Posted Date
-                </small>
-
-                <strong>
-                  {jobsdetails.posted_date
+                  {jobsdetails.updated
                     ? new Date(
-                        jobsdetails.posted_date
+                        jobsdetails.updated
                       ).toLocaleDateString("en-IN")
                     : "Not available"}
                 </strong>
@@ -443,22 +501,22 @@ const Home = () => {
 
             </div>
 
-            <div className="skills-section">
+            
+
+            <div className="details-description">
 
               <h5>
-                Education & Skills
+                Job Source
               </h5>
 
-              <div className="details-description">
-
-                <p>
-                  {jobsdetails.education_and_skills ||
-                    "Not specified"}
-                </p>
-
-              </div>
+              <p>
+                {jobsdetails.source ||
+                  "Not available"}
+              </p>
 
             </div>
+
+            {/* ACTION BUTTONS */}
 
             <div className="job-modal-actions">
 

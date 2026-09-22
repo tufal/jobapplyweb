@@ -100,7 +100,7 @@ const Login = () => {
     <div className="login-page">
       <div className="login-card">
 
-        {/* Header */}
+       
         <div className="login-header">
           <div className="login-logo">
             <span>MERIJOB</span>
@@ -163,7 +163,7 @@ const Login = () => {
               />
             </div>
 
-            {/* Password */}
+            
             <div className="login-field">
 
               <div className="login-label-row">

@@ -6,6 +6,7 @@ import { register } from "../controller/register.js";
 import { profile } from "../controller/profile.js";
 import { logout } from "../controller/logout.js";
 import { authmiddleware } from "../middleware/authmiddleware.js";
+import { completeprofile } from "../controller/completeprofile.js";
 
 const router = express.Router();
 
@@ -18,5 +19,7 @@ router.post("/register", register);
 router.post("/login", login);
 
 router.post("/logout", logout);
+
+router.post("/completeprofile",authmiddleware,completeprofile); 
 
 export default router;
